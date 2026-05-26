@@ -6,60 +6,10 @@
 # After updating the registry, broadcasts an ImmersiveColorSet message so the
 # change takes effect immediately without requiring a sign-out or restart.
 #
-# User settings live in:   .\Config\LightModeDarkModeToggle.yaml
-# Schema reference:        .\Config\LightModeDarkModeToggle.Template.yaml.txt
-# If the user config is missing, this script auto-creates a defaults-only
-# version (no personal info, no accent color applied).
+# See LightModeDarkModeToggle.md for setup instructions (config, keyboard shortcut, troubleshooting).
 
 # Requires the 'powershell-yaml' module.
 # Install once with: Install-Module powershell-yaml -Scope CurrentUser
-
-# ============================================================
-# HOW TO SET UP THE KEYBOARD SHORTCUT
-# ============================================================
-#
-# 1. RIGHT-CLICK the desktop > New > Shortcut
-#
-# 2. In the "Target" field, paste this — editing the path to
-#    match wherever THIS file is saved:
-#
-#      powershell.exe -WindowStyle Hidden -ExecutionPolicy Bypass -File "C:\full\path\to\THIS_FILE.ps1"
-#
-#    IMPORTANT — the path must point to this .ps1 FILE ITSELF,
-#    not the folder it lives in. It must include the filename
-#    and .ps1 extension.
-#
-#    Quick way to get the correct path: in File Explorer, hold
-#    Shift and right-click this file, then choose "Copy as path".
-#    Paste that after -File (it will already be quoted).
-#
-# 3. In the "Start In" field, paste just the FOLDER path
-#    (no filename, no .ps1):
-#
-#      C:\full\path\to\
-#
-# 4. Name the shortcut whatever you like and click Finish.
-#
-# 5. Right-click the new shortcut > Properties > Shortcut tab
-#    > click in the "Shortcut key" field > press the key you
-#    want (e.g. E becomes Ctrl+Alt+E automatically).
-#    Click OK.
-#
-# 6. The shortcut MUST stay on the Desktop or in the Start Menu
-#    for the hotkey to work globally. Moving it to a regular
-#    folder will silently disable the hotkey.
-#
-# ------------------------------------------------------------
-# TROUBLESHOOTING: If the hotkey flashes a window but nothing
-# happens, the script is likely erroring out silently.
-# To see the error, temporarily edit the Target field and
-# replace -WindowStyle Hidden with -NoExit:
-#
-#   powershell.exe -NoExit -ExecutionPolicy Bypass -File "..."
-#
-# This keeps the window open so you can read the error message.
-# Change it back to -WindowStyle Hidden once it's working.
-# ============================================================
 
 
 # ----- Load config --------------------------------------------------
