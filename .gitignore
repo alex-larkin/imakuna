@@ -1,4 +1,4 @@
-.mdata
-.data
-.yaml
-.json
+*.mdata
+*.data
+*.yaml
+*.json
