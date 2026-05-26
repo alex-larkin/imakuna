@@ -2,7 +2,7 @@
 
 _Note: Written by Claude (claude-sonnet-4-6) on 26 May, 2026, for Alex Larkin_
 
-Toggles Windows 11 between Light Mode and Dark Mode for both apps and the system UI. Optionally applies a preset accent color to the taskbar and title bar in either mode. Changes take effect immediately — no sign-out or restart required.
+Toggles Windows 11 between Light Mode and Dark Mode for both apps and the system UI. Optionally applies a preset accent color to the taskbar and title bar in dark mode. Changes take effect immediately — no sign-out or restart required.
 
 ---
 
@@ -61,14 +61,3 @@ powershell.exe -NoExit -ExecutionPolicy Bypass -File "C:\...\LightModeDarkModeTo
 This keeps the window open so you can read the error. Change it back to `-WindowStyle Hidden` once resolved.
 
 ---
-
-## File layout
-
-```
-PowerShell/
-    LightModeDarkModeToggle.ps1
-    LightModeDarkModeToggle.md          ← this file
-    Config/
-        LightModeDarkModeToggle.yaml            ← your config (git-ignored)
-        LightModeDarkModeToggle.Template.yaml.txt  ← schema reference (committed)
-```
