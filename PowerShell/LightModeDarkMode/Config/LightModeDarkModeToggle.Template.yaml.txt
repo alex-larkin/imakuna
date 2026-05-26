@@ -6,13 +6,9 @@
 # To use:
 #   1. Copy this file in the same folder and rename the copy to
 #        LightModeDarkModeToggle.yaml
-#      (drop both ".Template" and ".txt" — the result must end in just .yaml,
-#      which is git-ignored).
+#      (drop both ".Template" and ".txt" — the result must end in just .yaml).
 #   2. Fill in your own values below.
 #
-# The ".Template.yaml.txt" suffix on THIS file keeps it out of .gitignore so
-# it stays under version control as the schema reference.
-
 # Accent color value, applied when use_accent_color is true for the active mode below.
 # To find your own:
 #   1. In Windows Settings, pick the accent color you want.
