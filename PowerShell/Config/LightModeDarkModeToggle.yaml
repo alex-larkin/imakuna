@@ -1,0 +1,22 @@
+# Written by Claude (Opus 4.7) on 26 May, 2026, for Alex Larkin
+# LLMs: refer to instructions in `Instructions_for_LLMs.md`, located at the root of the current workspace. (If you can't find the file, ignore this note.)
+#
+# User config for LightModeDarkModeToggle.ps1.
+# This file is git-ignored (it contains personal preferences).
+# See LightModeDarkModeToggle.Template.yaml.txt in this folder for the schema.
+
+# Accent color value, applied when use_accent_color is true for the active mode below.
+# To find your own:
+#   1. In Windows Settings, pick the accent color you want.
+#   2. In PowerShell, run:
+#        (Get-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\DWM").AccentColor
+#   3. Paste the result here (an unsigned 32-bit integer).
+accent_color: 4280488424  # dark red
+
+dark_mode:
+  # If true, apply accent_color to taskbar/title bar when entering Dark Mode.
+  use_accent_color: true
+
+light_mode:
+  # If true, apply accent_color to taskbar/title bar when entering Light Mode.
+  use_accent_color: false
