@@ -2,3 +2,5 @@
 *.data
 *.yaml
 *.json
+*code-workspace
+*.log
