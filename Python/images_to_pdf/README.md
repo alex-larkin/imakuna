@@ -14,6 +14,9 @@ It is aimed at print-ready output: images are placed at their real-world size
 (based on DPI), centered within configurable margins, and never enlarged past
 100% so they stay sharp.
 
+It is a free alternative to [ilovepdf.com](https://ilovepdf.com)'s "JPG to PDF"
+tool, for those who are comfortable with using the terminal (command line). 
+
 ## What it does, step by step
 
 For every image in the input folder (sorted by filename), the script:

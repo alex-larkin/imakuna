@@ -10,6 +10,11 @@ pages are left untouched -- the footer text is drawn on a transparent overlay
 that is merged onto each page, so existing content is never re-rendered or
 degraded.
 
+
+It is a free alternative to [ilovepdf.com](https://ilovepdf.com)'s "page numbers"
+tool, for those who are comfortable with using the terminal (command line). 
+
+
 Features:
 
 - **Page numbers** with flexible alignment (left, right, center, outer, inner).

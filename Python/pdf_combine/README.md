@@ -10,6 +10,11 @@ Combine every PDF in a folder into a single PDF document.
 folder (files in subfolders are ignored), concatenates them in alphabetical
 order, and writes the result back into that same folder as a new PDF.
 
+
+It is a free alternative to [ilovepdf.com](https://ilovepdf.com)'s "Merge PDF"
+tool, for those who are comfortable with using the terminal (command line). 
+
+
 Key behaviors:
 
 - **Ordering** — files are merged alphabetically by filename. You can flip this
