@@ -86,7 +86,7 @@ combine_pdfs(
     output_prefix="01_",
     sort_ascending=False,
     normalize_page_size=True,
-    target_page_size="letter",
+    target_page_size="a4",
 )
 ```
 
@@ -115,7 +115,7 @@ page_normalization:
   # Rescale every page to a uniform paper size (see "What it does" above).
   normalize: true
   # Target paper size: letter, a4, legal, or a3.
-  target_page_size: letter
+  target_page_size: a4
 ```
 
 | Key                                  | Type    | Meaning                                                            |

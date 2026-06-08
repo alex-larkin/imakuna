@@ -50,7 +50,7 @@ sorting:
 
 page_normalization:
   normalize: true            # rescale all pages to a uniform paper size
-  target_page_size: letter   # letter, a4, legal, or a3
+  target_page_size: a4       # letter, a4, legal, or a3
 """
 
 
