@@ -1,0 +1,23 @@
+# Configuration template for images_to_pdf.py
+# Copy this file to images_to_pdf.yaml and edit the values for your machine.
+# (The script also auto-creates images_to_pdf.yaml with these defaults on first
+# run if it is missing.) The real .yaml is git-ignored; this template is safe to
+# commit because it contains no personal paths.
+
+paths:
+  input_folder: ./input          # Folder of source images (png/jpg/jpeg/tiff/bmp)
+  output_pdf: ./output/output.pdf # Where the combined PDF is written
+
+page:
+  size: A4          # ISO A-series name: A0, A1, A2, A3, A4, A5, A6
+  margin_cm: 0.75   # Margin around the image, in centimetres
+  bleed_mm: 3.0     # Bleed in millimetres (used only if options.crop_bleed)
+
+options:
+  paginate: false   # Draw a centered page number near the bottom
+  deskew: false     # Auto-straighten each image before placing it
+  crop_bleed: true  # Draw hairline crop marks around the trim edges
+
+image:
+  target_dpi: 250   # Assumed DPI for images that carry no DPI metadata
+  jpeg_quality: 85  # JPEG compression quality, 1 (smallest) to 100 (best)

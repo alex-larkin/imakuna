@@ -1,0 +1,35 @@
+# Configuration template for pdf_add_page_numbers.py
+# Written by Claude (Opus 4.8) on 07 Jun, 2026, for Alex Larkin
+# Copy this file to pdf_add_page_numbers.yaml and edit the values for your
+# machine. (The script also auto-creates that file with these defaults on first
+# run if it is missing.) The real .yaml is git-ignored; this template is safe to
+# commit because it contains no personal paths. See README.md for full details.
+
+paths:
+  input_path: ""    # Single PDF file OR a folder of PDFs to process
+  output_path: ""   # Single-file output; blank = auto-name. Ignored in folder mode
+
+page_numbers:
+  add: true
+  align: outer            # left, right, center, outer, or inner
+  skip_first_page: false  # If true, the first page shows no number
+  first_page_is_one: true # If true, the first numbered page shows "1"
+
+filename_footer:
+  add: true
+  align: inner            # left, right, center, outer, or inner
+  include_extension: false
+
+blank_page:
+  add_if_odd: true              # Append a blank page when page count is odd
+  text: "(página en blanco)"    # Footer for the blank page; blank = none
+
+formatting:
+  font_name: Helvetica
+  font_size: 9
+  margin_bottom_mm: 10.0  # Distance of footer from the bottom edge, in mm
+  margin_side_mm: 15.0    # Distance from the side edge for non-centered text, in mm
+
+output_naming:
+  suffix: _numbered
+  subfolder: numbered_output

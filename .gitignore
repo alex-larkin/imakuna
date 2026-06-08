@@ -4,3 +4,8 @@
 *.json
 *code-workspace
 *.log
+
+
+# Compiled Python files and cache directories.
+__pycache__/
+*.pyc

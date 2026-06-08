@@ -1,0 +1,23 @@
+# Configuration template for pdf_combine.py
+# Written by Claude (Opus 4.8) on 07 Jun, 2026, for Alex Larkin
+# Copy this file to pdf_combine.yaml and edit the values for your machine. (The
+# script also auto-creates that file with these defaults on first run if it is
+# missing.) The real .yaml is git-ignored; this template is safe to commit
+# because it contains no personal paths. See README.md for full details.
+
+paths:
+  input_folder: ""   # Folder of PDFs to combine (subfolders ignored)
+
+output_filename:
+  # Output name is built as: {prefix}{middle}{suffix}.pdf
+  prefix: ""
+  # middle: null = use folder name; "" = omit; "text" = literal text
+  middle: ""
+  suffix: ""
+
+sorting:
+  sort_ascending: true   # true = A-Z, false = Z-A
+
+page_normalization:
+  normalize: true            # Rescale all pages to a uniform paper size
+  target_page_size: letter   # letter, a4, legal, or a3
