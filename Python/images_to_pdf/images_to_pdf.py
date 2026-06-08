@@ -7,7 +7,7 @@ import os
 import yaml
 import cv2
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageOps
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import mm, inch
 from reportlab.lib.colors import black
@@ -19,7 +19,7 @@ from io import BytesIO
 Convert a folder of images into a single PDF (one page per image), with
 optional deskewing, pagination, JPEG compression, and printer crop marks.
 
-See images_to_pdf_README.md for full usage, configuration, and behavior notes.
+See README.md for full usage, configuration, and behavior notes.
 
 Created: 2025-12-20
 """
@@ -110,7 +110,7 @@ def pt_to_mm(pt_value: float) -> float:
 
 # --------------------------- USER CONFIG ---------------------------------
 # Settings live in images_to_pdf.yaml next to this script (git-ignored,
-# auto-created on first run). See images_to_pdf_README.md for details.
+# auto-created on first run). See README.md for details.
 
 # Config file sits beside this script regardless of the current working dir.
 CONFIG_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),
@@ -129,9 +129,10 @@ _DEFAULT_CONFIG = {
         "bleed_mm": 3.0,     # Bleed in millimetres (used if crop_bleed is true)
     },
     "options": {
-        "paginate": False,   # Add page numbers at bottom center
-        "deskew": False,     # Deskew each image before adding to PDF
-        "crop_bleed": True,  # Draw crop marks + bleed
+        "paginate": False,           # Add page numbers at bottom center
+        "deskew": False,             # Deskew each image before adding to PDF
+        "crop_bleed": True,          # Draw crop marks + bleed
+        "detect_orientation": False, # Match each page's orientation to its image
     },
     "image": {
         "target_dpi": 250,   # Target DPI for images without DPI info
@@ -156,9 +157,11 @@ page:
   bleed_mm: 3.0     # Bleed in millimetres (used only if options.crop_bleed)
 
 options:
-  paginate: false   # Draw a centered page number near the bottom
-  deskew: false     # Auto-straighten each image before placing it
-  crop_bleed: true  # Draw hairline crop marks around the trim edges
+  paginate: false           # Draw a centered page number near the bottom
+  deskew: false             # Auto-straighten each image before placing it
+  crop_bleed: true          # Draw hairline crop marks around the trim edges
+  detect_orientation: false # Make a page landscape when its image is wider than tall
+                            # (near-square images, within 2%, stay portrait)
 
 image:
   target_dpi: 250   # Assumed DPI for images that carry no DPI metadata
@@ -204,6 +207,7 @@ DEFAULT_MARGIN_CM = _CFG["page"]["margin_cm"]       # Margin around image in cm
 DEFAULT_JPEG_QUALITY = _CFG["image"]["jpeg_quality"]  # JPEG quality (1-100)
 DEFAULT_CROP_BLEED = _CFG["options"]["crop_bleed"]    # Draw crop marks + bleed
 DEFAULT_BLEED_MM = _CFG["page"]["bleed_mm"]           # Bleed in millimetres
+DEFAULT_DETECT_ORIENTATION = _CFG["options"]["detect_orientation"]  # Per-page orientation
 
 
 def deskew_image(pil_img, delta=1, limit=5):
@@ -248,14 +252,32 @@ def images_to_pdf(
     margin_cm: float = DEFAULT_MARGIN_CM,                   # Default margin in cm
     jpeg_quality: int = DEFAULT_JPEG_QUALITY,                   # JPEG compression quality (1-100)
     crop_bleed: bool = DEFAULT_CROP_BLEED,                      # Whether to draw crop marks + bleed
-    bleed_mm: float = DEFAULT_BLEED_MM                           # Bleed in millimetres
+    bleed_mm: float = DEFAULT_BLEED_MM,                          # Bleed in millimetres
+    detect_orientation: bool = DEFAULT_DETECT_ORIENTATION        # Match page orientation to each image
 ):
-    # Resolve page_size if given as a name
+    # Resolve page_size if given as a name. These are the base dimensions; when
+    # detect_orientation is on, each page may swap them to match its image.
     if isinstance(page_size, str):
         width_pt, height_pt = get_page_size_by_name(page_size)
     else:
         width_pt, height_pt = page_size
     margin_pt = margin_cm * 10 * mm  # 1 cm = 10 mm
+
+    # Validate the output path before doing any work. ReportLab only tries to
+    # open the file at the very end (c.save), so a bad path otherwise wastes the
+    # whole render and surfaces a misleading "Permission denied" on Windows when
+    # the path is actually a folder.
+    if os.path.isdir(output_pdf):
+        raise ValueError(
+            f"output_pdf must be a file path ending in .pdf, not a folder: {output_pdf!r}. Edit the `output_pdf` variable in the .yaml file."
+        )
+    if not output_pdf.lower().endswith(".pdf"):
+        raise ValueError(
+            f"output_pdf must end in .pdf (or .PDF): {output_pdf!r}. Edit the `output_pdf` variable in the .yaml file."
+        )
+    out_dir = os.path.dirname(output_pdf)
+    if out_dir:
+        os.makedirs(out_dir, exist_ok=True)  # Create the destination folder if needed
 
     # Gather and sort images
     files = sorted(fn for fn in os.listdir(input_folder)
@@ -268,6 +290,11 @@ def images_to_pdf(
     for idx, fn in enumerate(files, start=1):
         path = os.path.join(input_folder, fn)
         img = Image.open(path)
+
+        # Honor any EXIF orientation flag so detection and placement match what
+        # a viewer shows (phone photos are often stored rotated). This bakes the
+        # rotation into the pixels, after which img.size is the as-seen size.
+        img = ImageOps.exif_transpose(img)
 
         # Ensure transparent images are composited onto white so they
         # print white (not black) when flattened. Handle RGBA/LA and
@@ -290,9 +317,23 @@ def images_to_pdf(
         px_w, px_h = img.size
         img_dpi = img.info.get('dpi', (target_dpi,))[0]
 
+        # Choose this page's dimensions. With detect_orientation on, a page goes
+        # landscape only when the image is more than 2% wider than tall; anything
+        # squarer than that (including portrait) stays vertical. sorted() makes
+        # this robust no matter which way the base size tuple was given.
+        if detect_orientation:
+            short_side, long_side = sorted((width_pt, height_pt))
+            if px_w > px_h * 1.02:
+                page_w, page_h = long_side, short_side  # landscape
+            else:
+                page_w, page_h = short_side, long_side  # portrait / near-square
+        else:
+            page_w, page_h = width_pt, height_pt
+        c.setPageSize((page_w, page_h))
+
         # Calculate available area for image (subtract margins)
-        avail_w = width_pt  - 2 * margin_pt
-        avail_h = height_pt - 2 * margin_pt
+        avail_w = page_w - 2 * margin_pt
+        avail_h = page_h - 2 * margin_pt
 
         # Calculate image size in points at its DPI
         img_w_pt = (px_w / img_dpi) * 72
@@ -359,7 +400,7 @@ def images_to_pdf(
         if paginate:
             c.setFont("Helvetica", 9)
             c.setFillColor(black)
-            c.drawCentredString(width_pt/2, 10 * mm, str(idx))
+            c.drawCentredString(page_w/2, 10 * mm, str(idx))
 
         c.showPage()
         print(f"Completed page {idx}: {fn}")
@@ -380,4 +421,5 @@ if __name__ == "__main__":
         jpeg_quality=DEFAULT_JPEG_QUALITY,
         crop_bleed=DEFAULT_CROP_BLEED,
         bleed_mm=DEFAULT_BLEED_MM,
+        detect_orientation=DEFAULT_DETECT_ORIENTATION,
     )

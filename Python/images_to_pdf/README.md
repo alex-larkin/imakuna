@@ -27,12 +27,17 @@ For every image in the input folder (sorted by filename), the script:
    transform) and rotating by the median skew angle. (Feature not yet tested.)
 3. **Sizes the image** in PostScript points using its DPI metadata (falling back
    to `target_dpi` when the image carries no DPI info).
-4. **Scales to fit** the available area (page minus margins), preserving aspect
+4. **Optionally matches page orientation to the image** (when
+   `detect_orientation` is on): a page is made landscape if its image is more
+   than 2% wider than tall, otherwise it stays portrait. This lets one PDF mix
+   portrait and landscape pages (e.g. page 1 portrait, pages 2-3 landscape).
+   EXIF orientation is honored first, so rotated phone photos are read as seen.
+5. **Scales to fit** the available area (page minus margins), preserving aspect
    ratio and never scaling above 100%.
-5. **Centers** the image horizontally and vertically within the margins.
-6. **Compresses** the image to JPEG in memory at the configured quality, then
+6. **Centers** the image horizontally and vertically within the margins.
+7. **Compresses** the image to JPEG in memory at the configured quality, then
    draws it onto the page.
-7. **Optionally draws crop marks** (hairline L-shapes just outside each trim
+8. **Optionally draws crop marks** (hairline L-shapes just outside each trim
    corner) and **page numbers** (centered near the bottom).
 
 When all pages are drawn, the combined PDF is saved to the output path.
@@ -99,6 +104,7 @@ All settings live in `images_to_pdf.yaml`:
 | `options` | `paginate`     | boolean | `false`              | Draw a centered page number near the bottom. |
 | `options` | `deskew`       | boolean | `false`              | Auto-straighten each image before placing it. |
 | `options` | `crop_bleed`   | boolean | `true`               | Draw hairline crop marks around the trim edges. |
+| `options` | `detect_orientation` | boolean | `false`        | Make a page landscape when its image is more than 2% wider than tall; near-square and portrait images stay vertical. |
 | `image`   | `target_dpi`   | integer | `250`                | Assumed DPI for images with no DPI metadata. |
 | `image`   | `jpeg_quality` | integer | `85`                 | JPEG compression quality, 1 (smallest) to 100 (best). |
 
@@ -135,6 +141,13 @@ sizes (`A0`-`A6`) are defined in millimetres; US sizes in inches:
   about 10 mm from the bottom of each page.
 - **Crop marks:** when `crop_bleed` is enabled, thin (~0.35 pt) black L-shaped
   marks are drawn just outside each corner of the image's trim box.
+- **Orientation:** when `detect_orientation` is enabled, each page's
+  orientation is chosen per image, so a single PDF can mix portrait and
+  landscape pages at the same paper size (e.g. landscape A4 alongside portrait
+  A4). The decision uses a 2% tolerance, so a near-square image stays vertical
+  rather than flipping on a tiny difference. EXIF orientation is applied before
+  the check, so photos that are stored rotated are measured as they appear.
+  With the option off, every page uses the configured size as-is.
 
 ## Files
 

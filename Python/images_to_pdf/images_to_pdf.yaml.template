@@ -14,9 +14,11 @@ page:
   bleed_mm: 3.0     # Bleed in millimetres (used only if options.crop_bleed)
 
 options:
-  paginate: false   # Draw a centered page number near the bottom
-  deskew: false     # Auto-straighten each image before placing it
-  crop_bleed: true  # Draw hairline crop marks around the trim edges
+  paginate: false           # Draw a centered page number near the bottom
+  deskew: false             # Auto-straighten each image before placing it
+  crop_bleed: true          # Draw hairline crop marks around the trim edges
+  detect_orientation: false # Make a page landscape when its image is wider than tall
+                            # (near-square images, within 2%, stay portrait)
 
 image:
   target_dpi: 250   # Assumed DPI for images that carry no DPI metadata
