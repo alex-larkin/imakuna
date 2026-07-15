@@ -5,7 +5,7 @@ description: Instructions for how to update files in the "imakuna" folder, witho
 
 # Important rule for editing or updating files in this repo
 Keep all personally identifiable information ("PII") OUT of the repo. That includes: 
-* Names
+* Peoples' names
 * file paths
 
 They must never be committed to the repo. Use skill workspace-python-and-powershell-files for instructions on how to include PII in .gitignored *.yaml or *.mdata files. 
