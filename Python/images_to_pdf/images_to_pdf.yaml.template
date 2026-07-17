@@ -1,8 +1,9 @@
 # Configuration template for images_to_pdf.py
+# Written by Claude (Opus 4.8) on 07 Jun, 2026, for Alex Larkin
 # Copy this file to images_to_pdf.yaml and edit the values for your machine.
 # (The script also auto-creates images_to_pdf.yaml with these defaults on first
 # run if it is missing.) The real .yaml is git-ignored; this template is safe to
-# commit because it contains no personal paths.
+# commit because it contains no personal paths. See README.md for full details.
 
 paths:
   input_folder: ./input          # Folder of source images (png/jpg/jpeg/tiff/bmp)

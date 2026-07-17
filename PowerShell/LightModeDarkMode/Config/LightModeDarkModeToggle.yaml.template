@@ -1,0 +1,15 @@
+# Configuration template for LightModeDarkModeToggle.ps1
+# Written by Claude (Opus 4.8) on 16 Jul, 2026, for Alex Larkin
+# Copy this file to LightModeDarkModeToggle.yaml and edit the values for your
+# machine. (The script also auto-creates that file with these defaults on first
+# run if it is missing.) The real .yaml is git-ignored; this template is safe to
+# commit because it contains no personal preferences. See README.md for full
+# details, including how to find your own accent_color value.
+
+accent_color: 0  # Unsigned 32-bit accent color value (see README.md > "Data file setup")
+
+dark_mode:
+  use_accent_color: false  # Apply accent_color to taskbar/title bar in Dark Mode
+
+light_mode:
+  use_accent_color: false  # Apply accent_color to taskbar/title bar in Light Mode

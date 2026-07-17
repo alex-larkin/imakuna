@@ -6,7 +6,7 @@
 # After updating the registry, broadcasts an ImmersiveColorSet message so the
 # change takes effect immediately without requiring a sign-out or restart.
 #
-# See LightModeDarkModeToggle.md for setup instructions (config, keyboard shortcut, troubleshooting).
+# See README.md for setup instructions (config, keyboard shortcut, troubleshooting).
 
 # Requires the 'powershell-yaml' module.
 # Install once with: Install-Module powershell-yaml -Scope CurrentUser
@@ -27,15 +27,15 @@ if (-not (Test-Path $configPath)) {
     }
     $defaultYaml = @'
 # Auto-created with safe defaults. Edit to customize.
-# See LightModeDarkModeToggle.Template.yaml.txt in this folder for the full schema and instructions.
+# See README.md > "Data file setup" for the full schema and instructions.
 
-accent_color: 0
+accent_color: 0  # Unsigned 32-bit accent color value
 
 dark_mode:
-  use_accent_color: false
+  use_accent_color: false  # Apply accent_color to taskbar/title bar in Dark Mode
 
 light_mode:
-  use_accent_color: false
+  use_accent_color: false  # Apply accent_color to taskbar/title bar in Light Mode
 '@
     $defaultYaml | Out-File -FilePath $configPath -Encoding utf8
     Write-Host "Created default config at: $configPath"

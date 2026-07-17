@@ -22,9 +22,9 @@ Install-Module powershell-yaml -Scope CurrentUser
 
 ## Setup
 
-### 1. Config file
+### 1. Data file setup
 
-On first run, the script auto-creates `Config\LightModeDarkModeToggle.yaml` with safe defaults. Edit it to customize accent color behavior. See `Config\LightModeDarkModeToggle.Template.yaml.txt` for the full schema and instructions.
+On first run, the script auto-creates `Config\LightModeDarkModeToggle.yaml` with safe defaults (`Config\LightModeDarkModeToggle.yaml.template` documents the same schema and is what the script copies from - edit the live `.yaml`, not the template, unless you're changing the shared defaults).
 
 To find your accent color value:
 
@@ -34,6 +34,8 @@ To find your accent color value:
    (Get-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\DWM").AccentColor
    ```
 3. Paste the result into `accent_color` in your config file.
+
+`dark_mode.use_accent_color` / `light_mode.use_accent_color` control whether that color is applied to the taskbar/title bar when entering the respective mode.
 
 ### 2. Keyboard shortcut
 
