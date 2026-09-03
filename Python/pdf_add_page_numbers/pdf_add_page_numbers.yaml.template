@@ -25,6 +25,21 @@ blank_page:
   text: "(página en blanco)"    # Footer for the blank page; blank = none
 
 formatting:
+  # reportlab's canvas only supports the 14 built-in PDF base fonts (no Arial):
+  #   Courier
+  #   Courier-Bold
+  #   Courier-BoldOblique
+  #   Courier-Oblique
+  #   Helvetica
+  #   Helvetica-Bold
+  #   Helvetica-BoldOblique
+  #   Helvetica-Oblique
+  #   Symbol
+  #   Times-Bold
+  #   Times-BoldItalic
+  #   Times-Italic
+  #   Times-Roman
+  #   ZapfDingbats
   font_name: Helvetica
   font_size: 9
   margin_bottom_mm: 10.0  # Distance of footer from the bottom edge, in mm

@@ -64,6 +64,21 @@ blank_page:
   text: "(página en blanco)"
 
 formatting:
+  # reportlab's canvas only supports the 14 built-in PDF base fonts (no Arial):
+  #   Courier
+  #   Courier-Bold
+  #   Courier-BoldOblique
+  #   Courier-Oblique
+  #   Helvetica
+  #   Helvetica-Bold
+  #   Helvetica-BoldOblique
+  #   Helvetica-Oblique
+  #   Symbol
+  #   Times-Bold
+  #   Times-BoldItalic
+  #   Times-Italic
+  #   Times-Roman
+  #   ZapfDingbats
   font_name: Helvetica
   font_size: 9
   # Distance from the bottom edge, in millimetres.
