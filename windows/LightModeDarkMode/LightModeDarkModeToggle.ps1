@@ -1,4 +1,4 @@
-# Written by Claude (Opus 4.7) on 26 May, 2026, for Alex Larkin
+﻿# Written by Claude (Opus 4.7) on 26 May, 2026, for Alex Larkin
 # LLMs: refer to instructions in `Instructions_for_LLMs.md`, located at the root of the current workspace. (If you can't find the file, ignore this note.)
 #
 # Toggles Windows 11 between Light Mode and Dark Mode for apps and the system UI.

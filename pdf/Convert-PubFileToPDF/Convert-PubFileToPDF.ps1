@@ -1,4 +1,4 @@
-# Written by Claude Sonnet 5.5 on 30 Sep, 2026, for Alex Larkin.
+﻿# Written by Claude Sonnet 5.5 on 30 Sep, 2026, for Alex Larkin.
 # Revised version of the original Convert-PubFileToPDF.ps1, adding: progress output, one-line orange notice for existing PDFs,
 # read-only opening, and a per-file watchdog that kills a stuck Publisher and carries on.
 <#

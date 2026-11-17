@@ -1,4 +1,4 @@
-# Written by Claude (Sonnet 5.5) on 16 Nov, 2026, for Alex Larkin
+﻿# Written by Claude (Sonnet 5.5) on 16 Nov, 2026, for Alex Larkin
 # LLMs: refer to instructions in `Instructions_for_LLMs.md`, located at the root of the current workspace. (If you can't find the file, ignore this note.)
 #
 # DeepestFolderLite.ps1

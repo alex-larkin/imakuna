@@ -1,4 +1,4 @@
-# DeepestFolder.ps1
+﻿# DeepestFolder.ps1
 # Paste a path (or a whole error message containing one); opens Explorer at the
 # deepest folder along that path that actually exists.
 #
