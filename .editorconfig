@@ -1,0 +1,7 @@
+root = true
+
+# PowerShell files are saved as UTF-8 WITH a BOM: Windows PowerShell 5.1 reads BOM-less UTF-8 as ANSI,
+# which turns the copyright sign into mojibake. (VBA .bas/.frm files are the opposite: no BOM.)
+# Needs an EditorConfig-aware editor (VS Code: the EditorConfig extension; Notepad++: its plugin).
+[*.{ps1,psm1,psd1}]
+charset = utf-8-bom
